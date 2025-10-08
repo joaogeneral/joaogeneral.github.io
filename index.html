@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cardápio - Teca's Burguer</title>
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="top-bar">
+        <button class="btn-cart">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            <span class="cart-badge">0</span>
+            <small id="cart-total-header">R$ 0,00</small>
+        </button>
+    </nav>
+
+    <header class="hero-header">
+        <div class="hero-branding">
+            <img src="logo.jpg" alt="Logo da Teca's Burguer" class="logo">
+            <h1>Teca's Burguer</h1>
+        </div>
+        <div class="hero-price">
+    <h2 class="promo-day">Quinta-Feira</h2>
+    <span>2 por R$ 24,99</span>
+</div>
+    </header>
+
+    <div id="add-to-cart-notification">Item adicionado!</div>
+
+    <div class="main-container">
+        <h2>Nosso Cardápio</h2>
+
+        <main class="cardapio-container">
+    
+        </main>
+    </div>
+    
+    <div id="modal-container">
+        <div class="modal-overlay"></div>
+        <div class="modal-conteudo">
+            <button class="modal-fechar">&times;</button>
+            <div class="modal-corpo">
+                <img id="modal-img" src="" alt="Hambúrguer">
+                <div class="modal-info">
+                    <h1 id="modal-nome">Nome do Hambúrguer</h1>
+                    <p id="modal-descricao">Descrição completa do hambúrguer.</p>
+                    <span id="modal-preco" class="preco-principal">R$ 0,00</span>
+                    <section class="adicionais">
+                        <h2>Turbine seu Lanche!</h2>
+                        <div class="adicional-item adicional-item--destaque" data-nome="Carne Extra 180g" data-preco="8.00">
+                            <div class="adicional-info"><span class="nome">🔥 Carne Extra 180g</span><span class="preco">+ R$ 8,00</span></div>
+                            <div class="quantidade-controle"><button class="btn-remover">-</button><span class="quantidade">0</span><button class="btn-adicionar">+</button></div>
+                        </div>
+                        <div class="adicional-item" data-nome="Cheddar Cremoso" data-preco="4.00">
+                            <div class="adicional-info"><span class="nome">Cheddar Cremoso</span><span class="preco">+ R$ 4,00</span></div>
+                            <div class="quantidade-controle"><button class="btn-remover">-</button><span class="quantidade">0</span><button class="btn-adicionar">+</button></div>
+                        </div>
+                    </section>
+                    <button class="pedir-btn btn-carrinho">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cart-container">
+        <div class="cart-overlay"></div>
+        <div class="cart-painel">
+            <button class="cart-fechar">&times;</button>
+            <h2>Meu Carrinho</h2>
+            <div id="cart-itens"></div>
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-preco">R$ 0,00</span>
+            </div>
+            <div class="cart-actions">
+                <button class="pedir-btn btn-finalizar">Finalizar Pedido</button>
+                <button class="btn-limpar-carrinho">Limpar Carrinho</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Teca's Burguer</p>
+        <p>R. Osvaldo Cruz - Centro, Bacabal - MA, 65700-000</p>
+        <div class="social-links">
+            <a href="https://www.instagram.com/tecassburguer/" title="Instagram" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="https://api.whatsapp.com/send/?phone=5599988036626&text&type=phone_number&app_absent=0" title="Telefone" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </a>
+        </div>
+    </footer>
+
+<script type="module">
+// Importa as ferramentas que a gente precisa do Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+document.addEventListener('DOMContentLoaded', async () => { // Adicionamos 'async' aqui
+    // =================================================================
+    // COLE A SUA CHAVE COMPLETA DO FIREBASE AQUI! (MISSÃO 1)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBmFp8H2FVRD4HCNPd5elqqvKMCVqMzxy8",
+      authDomain: "tecas-burguer.firebaseapp.com",
+      projectId: "tecas-burguer",
+      storageBucket: "tecas-burguer.firebasestorage.app",
+      messagingSenderId: "1:314211213113:web:abfe5df75d898d321452e8",
+      appId: "G-T4PC3W2KZR"
+    };
+    // =================================================================
+
+    // Inicializa o Firebase e o Firestore
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // --- Cérebro e Seletores ---
+    let carrinho = [];
+    const numeroTelefone = '5599988036626';
+    const modalContainer = document.getElementById('modal-container');
+    const cartContainer = document.getElementById('cart-container');
+    const cartBadge = document.querySelector('.cart-badge');
+    const cartTotalPreco = document.getElementById('cart-total-preco');
+    const cartTotalHeader = document.getElementById('cart-total-header');
+    const cartItensContainer = document.getElementById('cart-itens');
+    const notification = document.getElementById('add-to-cart-notification');
+    const cardapioContainer = document.querySelector('.cardapio-container');
+
+    // --- FUNÇÃO PARA BUSCAR E RENDERIZAR OS LANCHES ---
+    async function carregarLanches() {
+        try {
+            const lanchesCollection = collection(db, 'lanches');
+            const lanchesSnapshot = await getDocs(lanchesCollection);
+            
+            cardapioContainer.innerHTML = ''; // Limpa o container
+
+            lanchesSnapshot.forEach(doc => {
+                const lanche = doc.data();
+                const card = document.createElement('div');
+                card.classList.add('card-hamburguer');
+                
+                card.innerHTML = `
+                    <img src="${lanche.imagem}" alt="${lanche.nome}">
+                    <div class="info">
+                        <h3>${lanche.nome}</h3>
+                        <p>${lanche.descricaoCurta}</p> 
+                        <span>R$ ${parseFloat(lanche.preco).toFixed(2)}</span>
+                    </div>
+                `;
+
+                card.addEventListener('click', () => {
+                    abrirModal({
+                        nome: lanche.nome,
+                        preco: lanche.preco,
+                        imagem: lanche.imagem,
+                        descricao: lanche.descricao
+                    });
+                });
+
+                cardapioContainer.appendChild(card);
+            });
+        } catch (error) {
+            console.error("Erro ao buscar lanches: ", error);
+            cardapioContainer.innerHTML = "<p style='color: white;'>Ops! Não conseguimos carregar o cardápio. Verifique a conexão com o Firebase.</p>";
+        }
+    }
+
+    // --- FUNÇÕES DE FEEDBACK E MODAL ---
+    function showNotification() { notification.classList.add('show'); setTimeout(() => { notification.classList.remove('show'); }, 2000); }
+    function flyToCartAnimation() { const modalImg = document.getElementById('modal-img'); const cartIcon = document.querySelector('.btn-cart'); const imgRect = modalImg.getBoundingClientRect(); const cartRect = cartIcon.getBoundingClientRect(); const clone = modalImg.cloneNode(true); clone.classList.add('hamburger-clone'); clone.style.position = 'fixed'; clone.style.left = `${imgRect.left}px`; clone.style.top = `${imgRect.top}px`; clone.style.width = `${imgRect.width}px`; clone.style.height = `${imgRect.height}px`; document.body.appendChild(clone); requestAnimationFrame(() => { clone.style.left = `${cartRect.left + (cartRect.width / 2)}px`; clone.style.top = `${cartRect.top + (cartRect.height / 2)}px`; clone.style.width = '0px'; clone.style.height = '0px'; clone.style.opacity = '0'; }); setTimeout(() => { clone.remove(); }, 800); }
+    function abrirModal(data) { document.getElementById('modal-img').src = data.imagem; document.getElementById('modal-nome').textContent = data.nome; document.getElementById('modal-descricao').textContent = data.descricao; const precoBase = parseFloat(data.preco); document.getElementById('modal-preco').textContent = `R$ ${precoBase.toFixed(2)}`; document.getElementById('modal-preco').dataset.precoBase = precoBase; modalContainer.querySelectorAll('.quantidade').forEach(span => span.textContent = '0'); modalContainer.classList.add('ativo'); }
+    function fecharModal() { modalContainer.classList.remove('ativo'); }
+    function atualizarPrecoModal() { const precoBase = parseFloat(document.getElementById('modal-preco').dataset.precoBase); let precoAdicionais = 0; modalContainer.querySelectorAll('.adicional-item').forEach(item => { const preco = parseFloat(item.dataset.preco); const quantidade = parseInt(item.querySelector('.quantidade').textContent); precoAdicionais += preco * quantidade; }); const precoTotal = precoBase + precoAdicionais; document.getElementById('modal-preco').textContent = `R$ ${precoTotal.toFixed(2)}`; }
+    
+    // --- FUNÇÕES DO CARRINHO ---
+    function abrirCarrinho() { cartContainer.classList.add('ativo'); }
+    function fecharCarrinho() { cartContainer.classList.remove('ativo'); }
+    function adicionarAoCarrinho() { flyToCartAnimation(); showNotification(); const item = { id: Date.now(), nome: document.getElementById('modal-nome').textContent, precoBase: parseFloat(document.getElementById('modal-preco').dataset.precoBase), imagem: document.getElementById('modal-img').src, adicionais: [] }; const adicionaisNoModal = modalContainer.querySelectorAll('.adicional-item'); adicionaisNoModal.forEach(adicional => { const quantidade = parseInt(adicional.querySelector('.quantidade').textContent); if (quantidade > 0) { for (let i = 0; i < quantidade; i++) { item.adicionais.push({ nome: adicional.dataset.nome, preco: parseFloat(adicional.dataset.preco) }); } } }); carrinho.push(item); atualizarCarrinho(); fecharModal(); }
+    function removerDoCarrinho(idDoItem) { carrinho = carrinho.filter(item => item.id !== idDoItem); atualizarCarrinho(); }
+    function limparCarrinho() { carrinho = []; atualizarCarrinho(); }
+    function calcularSubtotalItem(item) { const precoAdicionais = item.adicionais.reduce((total, adicional) => total + adicional.preco, 0); return item.precoBase + precoAdicionais; }
+    function atualizarCarrinho() { cartItensContainer.innerHTML = ''; let totalCarrinho = 0; carrinho.forEach(item => { const subtotal = calcularSubtotalItem(item); totalCarrinho += subtotal; const adicionaisHTML = item.adicionais.map(ad => `<li>${ad.nome}</li>`).join(''); const itemHTML = ` <div class="cart-item"> <button class="btn-remover-item" data-id="${item.id}">&times;</button> <img src="${item.imagem}" alt="${item.nome}"> <div class="cart-item-info"> <h4>${item.nome}</h4> <p>Subtotal: R$ ${subtotal.toFixed(2)}</p> <ul class="cart-item-adicionais">${adicionaisHTML}</ul> </div> </div> `; cartItensContainer.innerHTML += itemHTML; }); const totalFormatado = `R$ ${totalCarrinho.toFixed(2)}`; cartTotalPreco.textContent = totalFormatado; cartTotalHeader.textContent = totalFormatado; cartBadge.textContent = carrinho.length; cartBadge.style.display = carrinho.length > 0 ? 'flex' : 'none'; }
+    function finalizarPedido() { if (carrinho.length === 0) { alert('Seu carrinho está vazio!'); return; } let mensagem = '*-- NOVO PEDIDO | TECA\'S BURGUER --*\n\n'; let totalGeral = 0; carrinho.forEach((item, index) => { const subtotalItem = calcularSubtotalItem(item); totalGeral += subtotalItem; mensagem += `*${index + 1}. ${item.nome}* (Subtotal: R$ ${subtotalItem.toFixed(2)})\n`; if (item.adicionais.length > 0) { const adicionaisContados = {}; item.adicionais.forEach(adicional => { adicionaisContados[adicional.nome] = (adicionaisContados[adicional.nome] || 0) + 1; }); for (const nomeAdicional in adicionaisContados) { const contagem = adicionaisContados[nomeAdicional]; mensagem += `   + ${contagem}x ${nomeAdicional.replace('🔥','').trim()}\n`; } } mensagem += '\n'; }); mensagem += `---------------------------------\n`; mensagem += `*TOTAL DO PEDIDO: R$ ${totalGeral.toFixed(2)}*`; const mensagemCodificada = encodeURIComponent(mensagem); const linkWhatsApp = `https://api.whatsapp.com/send?phone=${numeroTelefone}&text=${mensagemCodificada}`; window.open(linkWhatsApp, '_blank'); }
+    
+    // --- EVENTOS (GATILHOS) ---
+    modalContainer.querySelector('.modal-fechar').addEventListener('click', fecharModal);
+    modalContainer.querySelector('.modal-overlay').addEventListener('click', fecharModal);
+    cartContainer.querySelector('.cart-fechar').addEventListener('click', fecharCarrinho);
+    cartContainer.querySelector('.cart-overlay').addEventListener('click', fecharCarrinho);
+    document.querySelector('.btn-cart').addEventListener('click', abrirCarrinho);
+    modalContainer.querySelector('.btn-carrinho').addEventListener('click', adicionarAoCarrinho);
+    document.querySelector('.btn-limpar-carrinho').addEventListener('click', limparCarrinho);
+    document.querySelector('.btn-finalizar').addEventListener('click', finalizarPedido);
+    cartItensContainer.addEventListener('click', (event) => { if (event.target.classList.contains('btn-remover-item')) { const itemId = parseInt(event.target.dataset.id); removerDoCarrinho(itemId); } });
+    modalContainer.querySelectorAll('.adicional-item').forEach(item => { const btnAdicionar = item.querySelector('.btn-adicionar'); const btnRemover = item.querySelector('.btn-remover'); const quantidadeSpan = item.querySelector('.quantidade'); btnAdicionar.addEventListener('click', () => { let quantidade = parseInt(quantidadeSpan.textContent); quantidade++; quantidadeSpan.textContent = quantidade; atualizarPrecoModal(); }); btnRemover.addEventListener('click', () => { let quantidade = parseInt(quantidadeSpan.textContent); if (quantidade > 0) { quantidade--; quantidadeSpan.textContent = quantidade; atualizarPrecoModal(); } }); });
+
+    // --- CARREGAMENTO INICIAL ---
+    carregarLanches();
+});
+</script>
+</body>
+</html>
