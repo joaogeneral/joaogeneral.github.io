@@ -231,3 +231,159 @@ footer { text-align: center; margin-top: 50px; padding: 20px; border-top: 1px so
 #add-to-cart-notification.show { opacity: 1; transform: translateY(0); visibility: visible; }
 .hamburger-clone { position: absolute; z-index: 9999; border-radius: 10px; transition: all 0.8s cubic-bezier(0.55, -0.44, 0.95, 0.73); }
 @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* --- NOVAS SEÇÕES --- */
+.titulo-secao {
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--branco-texto); /* Mudei pra branco pra destacar do rosa do logo */
+    font-size: 2.8em;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 0px var(--rosa-principal);
+    text-align: left; /* Fica mais chique alinhado a esquerda com padding */
+    padding-left: 20px;
+}
+
+.separador-secao {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), var(--rosa-principal), rgba(0, 0, 0, 0));
+    margin: 40px 0;
+    opacity: 0.5;
+}
+
+/* Ajuste fino pra mobile */
+@media (max-width: 600px) {
+    .titulo-secao {
+        text-align: center;
+        padding-left: 0;
+        font-size: 2.2em;
+    }
+}
+
+/* --- ESTILOS DO CHECKOUT --- */
+.titulo-checkout { color: var(--rosa-principal); text-align: center; margin-bottom: 20px; font-family: 'Bebas Neue', sans-serif; font-size: 2.5em; }
+
+.grupo-input { margin-bottom: 15px; text-align: left; }
+.grupo-input label { display: block; font-weight: bold; margin-bottom: 5px; color: #ddd; }
+.grupo-input input, .grupo-input select {
+    width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #444;
+    background-color: #222; color: white; font-size: 16px;
+}
+
+/* Opções de Entrega (Botões lado a lado) */
+.opcoes-entrega { display: flex; gap: 10px; }
+.radio-box {
+    flex: 1; background: #333; padding: 10px; border-radius: 8px;
+    cursor: pointer; text-align: center; border: 1px solid transparent;
+    transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 5px;
+}
+.radio-box:hover { background: #444; }
+/* Estilo quando selecionado (o input radio fica escondido, a gente estiliza a caixa) */
+.radio-box input { display: none; } 
+.radio-box:has(input:checked) { border-color: var(--rosa-principal); background: rgba(228, 0, 124, 0.1); color: var(--rosa-principal); font-weight: bold; }
+
+/* Áreas Escondidas (Pix, Troco, Endereço) */
+.hidden { display: none; }
+.info-extra { background: #2a2a2a; padding: 10px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid var(--rosa-principal); }
+
+/* Caixa do Pix */
+.pix-box { display: flex; justify-content: space-between; align-items: center; background: #111; padding: 10px; border-radius: 5px; margin-top: 5px; border: 1px solid #444; }
+.pix-box button { background: var(--rosa-principal); border: none; color: white; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+
+/* Total Final */
+.resumo-total { border-top: 1px solid #444; padding-top: 15px; margin-top: 20px; text-align: right; }
+.total-destaque { color: var(--rosa-principal); font-size: 1.8em; margin-top: 5px; }
+.btn-zap { width: 100%; margin-top: 15px; background-color: #25D366; } /* Verde do Zap */
+.btn-zap:hover { background-color: #1ebc57; }
+
+/* --- CORREÇÃO DO BUG (COLA NO FINAL DO CSS) --- */
+
+/* Isso garante que o Checkout nasça ESCONDIDO e fixo na tela */
+#checkout-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none; /* O SEGREDO: Começa invisível */
+    justify-content: center;
+    align-items: center;
+    z-index: 3000; /* Botei bem alto pra ficar por cima de tudo */
+    padding: 20px;
+}
+
+/* Quando o JavaScript adicionar a classe 'ativo', ele aparece */
+#checkout-modal.ativo {
+    display: flex;
+}
+
+/* Garante que o fundo preto do checkout cubra tudo */
+#checkout-modal .modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85); /* Um pouco mais escuro que o normal */
+    backdrop-filter: blur(5px);
+}
+/* Animação para deixar o banner vivo */
+@keyframes pulsar {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(228, 0, 124, 0.7); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(228, 0, 124, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(228, 0, 124, 0); }
+}
+
+.hero-price {
+    /* Adicionamos a animação aqui */
+    animation: pulsar 2s infinite;
+    transition: background-color 0.5s ease; /* Transição suave se mudar de cor */
+    cursor: default;
+}
+
+.hero-price:hover {
+    animation: none; /* Para de pular se passar o mouse */
+    transform: scale(1.1); /* Fica grandão */
+}
+
+/* STATUS DA LOJA */
+/* STATUS DA LOJA (VISIBILIDADE MÁXIMA) */
+.status-badge {
+    padding: 10px 20px; /* Aumentei um pouco pra ficar parrudo */
+    border-radius: 30px; /* Mais arredondado */
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    margin-top: 15px;
+    text-transform: uppercase; /* Letra maiúscula pra gritar o status */
+    font-size: 0.9em;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6); /* Sombra forte pra desgrudar do fundo */
+    transition: all 0.3s ease;
+}
+
+/* ABERTO: Verde Sólido + Texto Branco */
+.status-badge.aberto {
+    background-color: #00C851; /* Verde WhatsApp */
+    color: white;
+    border: 2px solid #007E33; /* Borda um pouco mais escura pra dar acabamento */
+}
+
+/* FECHADO: Vermelho Sólido + Texto Branco */
+.status-badge.fechado {
+    background-color: #ff4444; /* Vermelho Alerta */
+    color: white;
+    border: 2px solid #CC0000;
+}
+
+/* A Bolinha agora é BRANCA pra brilhar no fundo colorido */
+.bolinha {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: block;
+    background-color: white;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8); /* Brilho branco */
+}

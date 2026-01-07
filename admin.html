@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Master - Teca's Burguer</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS ESPECIAL PRO ADMIN */
+        body { padding: 40px 20px; text-align: center; max-width: 1200px; margin: 0 auto; }
+        
+        .container-box { 
+            background-color: var(--preto-fundo); 
+            border: 2px solid var(--rosa-principal); 
+            border-radius: 15px; 
+            padding: 30px; 
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        /* Login centralizado */
+        #tela-login { max-width: 400px; margin: 50px auto; }
+
+        /* Formulário */
+        .admin-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left; }
+        .full-width { grid-column: span 2; }
+        
+        input, select, textarea {
+            width: 100%; padding: 10px; border-radius: 5px; 
+            border: 1px solid #555; background: #222; color: white;
+        }
+        label { color: var(--rosa-principal); font-weight: bold; font-size: 0.9em; margin-bottom: 5px; display: block; }
+
+        /* Botões */
+        .btn-acao {
+            background-color: var(--rosa-principal); color: white; font-size: 1.1em;
+            width: 100%; padding: 12px; border: none; border-radius: 10px; cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-acao:hover { background-color: #ff3399; }
+        .btn-cancelar { background-color: #555; margin-top: 10px; }
+        /* A CORREÇÃO TÁ NO "width: auto;" */
+        .btn-logout { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            background: #dc3545; /* Mudei pra vermelho pra destacar que é SAIR */
+            color: white; /* Garante que o texto fique branco */
+            padding: 8px 15px; 
+            font-size: 0.9em; 
+            border-radius: 5px; /* Arredonda os cantos */
+            border: none;
+            width: auto !important; /* O IMPORTANTE: Isso impede ele de ficar gigante */
+            cursor: pointer;
+        }
+
+        /* LISTA DE ITENS (O "R" DO CRUD) */
+        .lista-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        
+        .item-admin {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #1a1a1a; padding: 15px; border-radius: 8px; margin-bottom: 10px;
+            border: 1px solid #333;
+        }
+        .item-info { display: flex; align-items: center; gap: 15px; text-align: left; }
+        .item-img { width: 60px; height: 60px; object-fit: cover; border-radius: 5px; }
+        .item-acoes { display: flex; gap: 10px; }
+        
+        .btn-editar { background: #ffc107; color: black; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-excluir { background: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+
+        .hidden { display: none !important; }
+
+        @media (max-width: 700px) { .admin-form { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } .item-admin { flex-direction: column; gap: 15px; } .item-acoes { width: 100%; justify-content: space-between; } }
+    </style>
+</head>
+<body>
+
+    <div id="tela-login" class="container-box">
+        <h2>🔒 Acesso Restrito</h2>
+        <form id="form-login">
+            <input type="email" id="email-login" placeholder="E-mail" required style="margin-bottom: 10px;">
+            <input type="password" id="senha-login" placeholder="Senha" required style="margin-bottom: 15px;">
+            <button type="submit" class="btn-acao">Entrar</button>
+        </form>
+        <p id="msg-erro" style="color: red; margin-top: 10px;"></p>
+    </div>
+
+    <div id="tela-painel" class="hidden">
+
+        <div class="container-box" style="text-align: center; border-color: white;">
+            <h3>🚦 Status da Loja</h3>
+            <div id="status-indicador" style="font-size: 1.5em; margin: 15px 0; font-weight: bold;">
+                🔄 Verificando...
+            </div>
+            <button id="btn-toggle-loja" class="btn-acao" style="max-width: 200px; margin: 0 auto;">
+                Carregando...
+            </button>
+        </div>
+        
+        <div class="container-box">
+            <button id="btn-logout" class="btn-logout btn-acao">Sair</button>
+            <h2 id="titulo-form">🔥 Cadastrar Novo Item</h2>
+            
+            <form id="form-cadastro" class="admin-form">
+                <input type="hidden" id="id-item"> <div class="full-width">
+                    <label>Nome do Lanche:</label>
+                    <input type="text" id="nome" placeholder="Ex: X-Salada Monstro" required>
+                </div>
+
+                <div class="full-width">
+                    <label>Descrição Completa (Ingredientes):</label>
+                    <textarea id="descricao" rows="3" placeholder="Pão, carne, queijo..." required></textarea>
+                </div>
+
+                <div class="full-width">
+                    <label>Descrição Curta (Opcional - Marketing):</label>
+                    <input type="text" id="descricaoCurta" placeholder="Ex: O Queridinho da Galera">
+                </div>
+
+                <div>
+                    <label>Preço (R$):</label>
+                    <input type="number" id="preco" step="0.01" placeholder="0.00" required>
+                </div>
+
+                <div>
+                    <label>Categoria:</label>
+                    <select id="categoria">
+                        <option value="hamburguer">🍔 Hambúrguer</option>
+                        <option value="acompanhamento">🍟 Acompanhamento/Bebida</option>
+                    </select>
+                </div>
+
+                <div class="full-width">
+                    <label>Link da Imagem:</label>
+                    <input type="url" id="imagem" placeholder="https://..." required>
+                </div>
+
+                <div class="full-width" style="margin-top: 10px;">
+                    <button type="submit" class="btn-acao" id="btn-salvar">Salvar Item</button>
+                    <button type="button" class="btn-acao btn-cancelar hidden" id="btn-cancelar">Cancelar Edição</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="container-box">
+            <div class="lista-header">
+                <h2>📋 Lista de Itens</h2>
+                <button onclick="carregarLista()" style="background:none; border:none; color:var(--rosa-principal); cursor:pointer;">🔄 Atualizar</button>
+            </div>
+            <div id="lista-itens">
+                <p style="color: #888;">Carregando itens...</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        // Importamos DELETE e UPDATE e DOC agora
+        // Adicionei 'setDoc' e 'onSnapshot' na lista de imports
+        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        const firebaseConfig = {
+             apiKey: "AIzaSyBmFp8H2FVRD4HCNPd5elqqvKMCVqMzxy8",
+             authDomain: "tecas-burguer.firebaseapp.com",
+             projectId: "tecas-burguer",
+             storageBucket: "tecas-burguer.firebasestorage.app",
+             messagingSenderId: "1:314211213113:web:abfe5df75d898d321452e8",
+             appId: "G-T4PC3W2KZR"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // --- VARIÁVEIS DE CONTROLE ---
+        let editandoId = null; // Se for null = Criar. Se tiver ID = Atualizar.
+
+        // --- LOGIN E AUTH (IGUAL ANTES) ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('tela-login').classList.add('hidden');
+                document.getElementById('tela-painel').classList.remove('hidden');
+                carregarLista(); // Carrega a lista assim que logar
+            } else {
+                document.getElementById('tela-login').classList.remove('hidden');
+                document.getElementById('tela-painel').classList.add('hidden');
+            }
+        });
+
+        document.getElementById('form-login').addEventListener('submit', (e) => {
+            e.preventDefault();
+            signInWithEmailAndPassword(auth, document.getElementById('email-login').value, document.getElementById('senha-login').value)
+            .catch(err => document.getElementById('msg-erro').textContent = "Login inválido!");
+        });
+        document.getElementById('btn-logout').addEventListener('click', () => signOut(auth));
+
+        // --- FUNÇÃO: CARREGAR LISTA (READ) ---
+        window.carregarLista = async function() {
+            const listaDiv = document.getElementById('lista-itens');
+            listaDiv.innerHTML = '<p>Atualizando...</p>';
+            
+            try {
+                const querySnapshot = await getDocs(collection(db, "lanches"));
+                listaDiv.innerHTML = ''; // Limpa
+
+                querySnapshot.forEach((doc) => {
+                    const lanche = doc.data();
+                    const id = doc.id;
+                    
+                    // Cria o HTML de cada linha
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'item-admin';
+                    itemDiv.innerHTML = `
+                        <div class="item-info">
+                            <img src="${lanche.imagem}" class="item-img" alt="foto">
+                            <div>
+                                <strong style="color: white; font-size: 1.1em;">${lanche.nome}</strong>
+                                <br>
+                                <span style="color: #ccc; font-size: 0.9em;">R$ ${lanche.preco} | ${lanche.categoria}</span>
+                            </div>
+                        </div>
+                        <div class="item-acoes">
+                            <button class="btn-editar" onclick="prepararEdicao('${id}')">✏️ Editar</button>
+                            <button class="btn-excluir" onclick="excluirItem('${id}', '${lanche.nome}')">🗑️ Excluir</button>
+                        </div>
+                    `;
+                    listaDiv.appendChild(itemDiv);
+                });
+            } catch (error) {
+                console.error(error);
+                listaDiv.innerHTML = '<p>Erro ao carregar lista.</p>';
+            }
+        }
+
+        // --- FUNÇÃO: PREPARAR EDIÇÃO (Popula o form) ---
+        // Precisa anexar no window pq o type="module" isola o escopo
+        window.prepararEdicao = async function(id) {
+            // Acha o item na lista que já baixamos ou busca do banco? 
+            // Vamos buscar direto da tela pra ser rápido, ou fazer nova query. 
+            // Pra simplificar, vamos buscar o card que tá na tela? Não, melhor buscar do firebase ou usar dados locais.
+            // Vamos fazer do jeito simples: Buscar o doc específico.
+            
+            // Mas pra ser MUITO rápido, vamos usar um truque: jogar os dados no HTML buttons quando cria a lista seria poluição.
+            // Vamos fazer um getDoc rapidinho só desse item? Não, vamos varrer a lista atual.
+            // MELHOR: Vamos salvar os dados num array global? Não, "Noob friendly".
+            
+            // Vamos fazer assim: Buscamos o item de novo no banco pra garantir.
+            const docRef = doc(db, "lanches", id);
+            // Mas espera, addDoc e getDocs já importamos. Precisamos de getDoc (singular) se quisermos buscar um.
+            // Pra não complicar imports, vamos varrer a lista visualmente? Não.
+            // Vamos usar o bom e velho: Passar os dados como parâmetro é perigoso com string.
+            
+            // Solução fácil: buscar todos de novo e achar o ID.
+            const querySnapshot = await getDocs(collection(db, "lanches"));
+            let lancheAlvo = null;
+            querySnapshot.forEach(doc => { if(doc.id === id) lancheAlvo = doc.data(); });
+
+            if(lancheAlvo) {
+                document.getElementById('id-item').value = id;
+                document.getElementById('nome').value = lancheAlvo.nome;
+                document.getElementById('descricao').value = lancheAlvo.descricao;
+                document.getElementById('descricaoCurta').value = lancheAlvo.descricaoCurta || '';
+                document.getElementById('preco').value = lancheAlvo.preco;
+                document.getElementById('categoria').value = lancheAlvo.categoria;
+                document.getElementById('imagem').value = lancheAlvo.imagem;
+
+                // Muda o estado da tela
+                editandoId = id;
+                document.getElementById('titulo-form').textContent = "✏️ Editando: " + lancheAlvo.nome;
+                document.getElementById('btn-salvar').textContent = "Atualizar Item";
+                document.getElementById('btn-salvar').style.backgroundColor = "#ffc107"; // Amarelo
+                document.getElementById('btn-salvar').style.color = "black";
+                document.getElementById('btn-cancelar').classList.remove('hidden');
+                
+                // Rola a tela pra cima
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // --- FUNÇÃO: CANCELAR EDIÇÃO ---
+        document.getElementById('btn-cancelar').addEventListener('click', resetarFormulario);
+
+        function resetarFormulario() {
+            document.getElementById('form-cadastro').reset();
+            editandoId = null;
+            document.getElementById('id-item').value = '';
+            
+            document.getElementById('titulo-form').textContent = "🔥 Cadastrar Novo Item";
+            document.getElementById('btn-salvar').textContent = "Salvar Item";
+            document.getElementById('btn-salvar').style.backgroundColor = ""; // Volta pro CSS original
+            document.getElementById('btn-salvar').style.color = "";
+            document.getElementById('btn-cancelar').classList.add('hidden');
+        }
+
+        // --- FUNÇÃO: EXCLUIR ITEM (DELETE) ---
+        window.excluirItem = async function(id, nome) {
+            if (confirm(`Tem certeza que quer apagar o "${nome}"? Não tem volta!`)) {
+                try {
+                    await deleteDoc(doc(db, "lanches", id));
+                    alert('Item apagado com sucesso! 🗑️');
+                    carregarLista(); // Atualiza a lista
+                } catch (error) {
+                    alert('Erro ao apagar: ' + error.message);
+                }
+            }
+        }
+
+        // --- SALVAR OU ATUALIZAR (CREATE / UPDATE) ---
+        document.getElementById('form-cadastro').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const dados = {
+                nome: document.getElementById('nome').value,
+                descricao: document.getElementById('descricao').value,
+                descricaoCurta: document.getElementById('descricaoCurta').value,
+                preco: parseFloat(document.getElementById('preco').value),
+                categoria: document.getElementById('categoria').value,
+                imagem: document.getElementById('imagem').value
+            };
+
+            try {
+                if (editandoId) {
+                    // MODO EDIÇÃO (UPDATE)
+                    const itemRef = doc(db, "lanches", editandoId);
+                    await updateDoc(itemRef, dados);
+                    alert("Item atualizado com sucesso! ✅");
+                } else {
+                    // MODO CRIAÇÃO (CREATE)
+                    await addDoc(collection(db, "lanches"), dados);
+                    alert("Item cadastrado com sucesso! 🔥");
+                }
+                
+                resetarFormulario();
+                carregarLista(); // Atualiza a lista lá embaixo
+
+            } catch (erro) {
+                console.error(erro);
+                alert("Deu ruim: " + erro.message);
+            }
+        });
+
+        // --- LÓGICA DO INTERRUPTOR (ABRIR/FECHAR) ---
+        const docLojaRef = doc(db, "config", "loja"); // Cria uma "gaveta" chamada config/loja
+        let lojaEstaAberta = false;
+
+        // Ouve em tempo real: se mudar no banco, muda na tela na hora
+        onSnapshot(docLojaRef, (docSnap) => {
+            const btn = document.getElementById('btn-toggle-loja');
+            const indicador = document.getElementById('status-indicador');
+
+            if (docSnap.exists()) {
+                lojaEstaAberta = docSnap.data().aberta;
+            } else {
+                // Se não existir (primeira vez), cria como fechada
+                lojaEstaAberta = false;
+                setDoc(docLojaRef, { aberta: false });
+            }
+
+            if (lojaEstaAberta) {
+                indicador.textContent = "✅ A LOJA ESTÁ ABERTA";
+                indicador.style.color = "#00ff00"; // Verde
+                btn.textContent = "FECHAR LOJA AGORA";
+                btn.style.backgroundColor = "#dc3545"; // Vermelho
+            } else {
+                indicador.textContent = "⛔ A LOJA ESTÁ FECHADA";
+                indicador.style.color = "#ff0000"; // Vermelho
+                btn.textContent = "ABRIR LOJA AGORA";
+                btn.style.backgroundColor = "#28a745"; // Verde
+            }
+        });
+
+        // Clique do botão
+        document.getElementById('btn-toggle-loja').addEventListener('click', async () => {
+            const novoStatus = !lojaEstaAberta; // Inverte (Se tá true vira false, e vice-versa)
+            
+            // Desabilita o botão rapidinho pra não clicar 2x
+            const btn = document.getElementById('btn-toggle-loja');
+            btn.disabled = true;
+            btn.textContent = "Processando...";
+
+            try {
+                // Atualiza no Firebase
+                await setDoc(docLojaRef, { aberta: novoStatus });
+                // Não precisa mudar o texto aqui, o onSnapshot ali em cima faz isso sozinho!
+            } catch (erro) {
+                alert("Erro ao mudar status: " + erro.message);
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+    </script>
+</body>
+</html>
