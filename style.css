@@ -387,3 +387,103 @@ footer { text-align: center; margin-top: 50px; padding: 20px; border-top: 1px so
     background-color: white;
     box-shadow: 0 0 8px rgba(255, 255, 255, 0.8); /* Brilho branco */
 }
+
+/* =========================================
+   📱 MODO MOBILE (Telas de Celular)
+   ========================================= */
+@media (max-width: 768px) {
+
+    /* 1. CABEÇALHO (HERO) */
+    .hero-header {
+        height: 50vh; /* Diminui a altura pra não ocupar tudo */
+        padding-top: 80px; /* Espaço pro menu fixo não tapar o logo */
+    }
+    .hero-branding h1 {
+        font-size: 2.5em; /* Diminui o nome da loja */
+    }
+    .hero-price h2 {
+        font-size: 1.5em; /* Diminui o título da promo */
+    }
+    .hero-branding .logo {
+        max-width: 90px; /* Logo menor */
+    }
+
+    /* 2. OS CARDS DE LANCHE */
+    .cardapio-container {
+        padding: 10px; /* Menos borda lateral */
+        gap: 15px; /* Menos espaço entre os lanches */
+    }
+    .card-hamburguer {
+        flex-direction: row; /* Mantém foto na esquerda, texto na direita */
+        padding: 10px;
+        align-items: flex-start; /* Alinha no topo */
+    }
+    .card-hamburguer img {
+        width: 90px;
+        height: 90px;
+        border-radius: 8px;
+    }
+    .card-hamburguer .info h3 {
+        font-size: 1.4em; /* Nome do lanche menor */
+    }
+    /* ... dentro do @media (max-width: 768px) ... */
+
+    .card-hamburguer .info p {
+        font-size: 0.85em; 
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Versão antiga/atual (Chrome, Safari) */
+        line-clamp: 2;         /* Versão padrão do futuro */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* 3. O MODAL DO PRODUTO (AQUELE QUE ABRE) */
+    .modal-conteudo {
+        width: 95%; /* Ocupa quase a tela toda */
+        padding: 20px;
+        margin: 10px;
+        max-height: 90vh; /* Evita que fique maior que a tela */
+        overflow-y: auto; /* Permite rolar se for grande */
+    }
+    .modal-corpo {
+        flex-direction: column; /* Joga a foto pra CIMA e texto pra BAIXO */
+        gap: 15px;
+        text-align: center; /* Centraliza tudo */
+    }
+    .modal-corpo img {
+        width: 100%; /* Foto ocupa largura total */
+        height: 200px; /* Altura fixa */
+        margin: 0 auto;
+    }
+    .modal-info h1 {
+        font-size: 1.8em; /* Nome menor */
+    }
+    /* Ajuste nos botões de + e - */
+    .quantidade-controle button {
+        width: 35px; height: 35px; /* Botões maiores pro dedo acertar */
+    }
+
+    /* 4. CARRINHO LATERAL */
+    .cart-painel {
+        width: 85%; /* Deixa ver um pouquinho do fundo */
+        max-width: none;
+    }
+    
+    /* 5. MODAL DE CHECKOUT (FINALIZAR) */
+    #checkout-modal .modal-conteudo {
+        width: 100%;
+        height: 100%; /* Ocupa tela cheia no mobile */
+        border-radius: 0;
+        max-height: none;
+        overflow-y: auto;
+    }
+    .opcoes-entrega {
+        flex-direction: column; /* Botões de entrega um embaixo do outro */
+    }
+    
+    /* 6. STATUS FLUTUANTE */
+    .status-badge {
+        font-size: 0.7em; /* Diminui a plaquinha de aberto/fechado */
+        padding: 8px 12px;
+    }
+}
