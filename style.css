@@ -493,7 +493,7 @@ footer { text-align: center; margin-top: 50px; padding: 20px; border-top: 1px so
         width: 60px;
         height: 60px;
         bottom: 20px;
-        right: 20px;
+        right: -30px;
         font-size: 1.5em;
     }
     
@@ -501,5 +501,60 @@ footer { text-align: center; margin-top: 50px; padding: 20px; border-top: 1px so
     .status-badge {
         font-size: 0.75em;
         padding: 5px 15px;
+    }
+
+    /* =========================================
+       DENTRO DO @MEDIA (max-width: 768px)
+       ARRUMANDO O MODAL GIGANTE
+       ========================================= */
+
+    /* 1. O conteiner do modal não pode vazar */
+    .modal-container {
+        padding: 10px !important; /* Um espacinho nas bordas */
+        align-items: center; /* Centraliza verticalmente */
+    }
+
+    /* 2. A caixa branca do modal */
+    .modal-conteudo {
+        width: 100% !important;     /* Ocupa a largura disponível */
+        max-width: 100% !important; /* Não deixa passar disso */
+        margin: 0 !important;       /* Remove margens externas */
+        padding: 20px 15px !important; /* Padding interno menor */
+        border-radius: 15px !important;
+        max-height: 90vh !important; /* Não deixa ficar mais alto que a tela */
+        overflow-y: auto !important; /* Se for muito alto, rola dentro dele */
+    }
+
+    /* 3. Organiza foto em cima, texto embaixo */
+    .modal-corpo {
+        flex-direction: column !important; /* Empilha tudo */
+        gap: 15px !important;
+    }
+
+    /* 4. A foto do lanche dentro do modal */
+    #modal-img {
+        width: 100% !important; /* Largura total */
+        height: auto !important; 
+        max-height: 200px !important; /* Limita a altura pra não tapar tudo */
+        object-fit: cover !important;
+        border-radius: 10px !important;
+    }
+
+    /* 5. Ajustes de texto pra caber melhor */
+    .modal-info h1 {
+        font-size: 1.5em !important; /* Título menor */
+        margin-bottom: 10px !important;
+    }
+    .modal-info p {
+        font-size: 0.9em !important; /* Descrição menor */
+    }
+
+    /* Botão de fechar (X) mais fácil de clicar */
+    .modal-fechar {
+        top: 10px !important;
+        right: 10px !important;
+        font-size: 2em !important;
+        padding: 5px !important;
+        z-index: 1002; /* Garante que fica por cima de tudo */
     }
 }
