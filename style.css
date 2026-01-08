@@ -389,101 +389,117 @@ footer { text-align: center; margin-top: 50px; padding: 20px; border-top: 1px so
 }
 
 /* =========================================
-   📱 MODO MOBILE (Telas de Celular)
+   📱 MODO MOBILE "ESTILO IFOOD" (Lista Única)
    ========================================= */
 @media (max-width: 768px) {
 
-    /* 1. CABEÇALHO (HERO) */
+    /* 1. HEADER COMPACTO (Pra sobrar espaço pro lanche) */
     .hero-header {
-        height: 50vh; /* Diminui a altura pra não ocupar tudo */
-        padding-top: 80px; /* Espaço pro menu fixo não tapar o logo */
-    }
-    .hero-branding h1 {
-        font-size: 2.5em; /* Diminui o nome da loja */
-    }
-    .hero-price h2 {
-        font-size: 1.5em; /* Diminui o título da promo */
+        min-height: auto; /* Tira altura forçada */
+        height: auto;
+        padding-top: 80px; /* Espaço pro menu flutuante */
+        padding-bottom: 30px;
     }
     .hero-branding .logo {
-        max-width: 90px; /* Logo menor */
+        width: 70px; /* Logo menorzinha */
+        margin-bottom: 5px;
+    }
+    .hero-branding h1 {
+        font-size: 1.8em; /* Texto Teca's menor */
+        margin-bottom: 5px;
+    }
+    .hero-price {
+        padding: 8px 15px; /* Box da promoção mais fina */
+        margin-top: 10px;
+    }
+    .hero-price h2 { font-size: 1.1em; }
+    .hero-price span { font-size: 0.9em; }
+
+    /* 2. O CARDÁPIO EM LISTA (O Pulo do Gato 🐈) */
+    .container {
+        padding: 0 10px; /* Aproveita quase toda a largura */
+    }
+    
+    .cardapio-container {
+        display: flex;
+        flex-direction: column; /* Força um embaixo do outro */
+        gap: 15px; /* Espaço entre os lanches */
     }
 
-    /* 2. OS CARDS DE LANCHE */
-    .cardapio-container {
-        padding: 10px; /* Menos borda lateral */
-        gap: 15px; /* Menos espaço entre os lanches */
-    }
     .card-hamburguer {
-        flex-direction: row; /* Mantém foto na esquerda, texto na direita */
+        display: flex; /* Transforma em linha */
+        flex-direction: row; /* Foto na esq, texto na dir */
+        width: 100%;
+        align-items: center; /* Centraliza verticalmente */
         padding: 10px;
-        align-items: flex-start; /* Alinha no topo */
+        background-color: #1a1a1a; /* Um cinza levemente mais claro pra destacar do fundo */
+        border: 1px solid #333;
     }
+
+    /* A FOTO GRANDONA */
     .card-hamburguer img {
-        width: 90px;
-        height: 90px;
-        border-radius: 8px;
+        width: 110px !important; /* Tamanho fixo generoso */
+        height: 110px !important;
+        object-fit: cover; /* Não deforma a foto */
+        border-radius: 12px;
+        flex-shrink: 0; /* Garante que a foto não amassa */
+        margin-right: 15px;
     }
+
+    /* AS INFORMAÇÕES DE TEXTO */
+    .card-hamburguer .info {
+        flex: 1; /* Ocupa o resto do espaço */
+        text-align: left; /* Texto alinhado a esquerda */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
     .card-hamburguer .info h3 {
-        font-size: 1.4em; /* Nome do lanche menor */
+        font-size: 1.1em;
+        margin-bottom: 5px;
+        color: white;
     }
-    /* ... dentro do @media (max-width: 768px) ... */
 
     .card-hamburguer .info p {
-        font-size: 0.85em; 
+        font-size: 0.85em;
+        color: #bbb;
+        margin-bottom: 8px;
         display: -webkit-box;
-        -webkit-line-clamp: 2; /* Versão antiga/atual (Chrome, Safari) */
-        line-clamp: 2;         /* Versão padrão do futuro */
+        -webkit-line-clamp: 2; /* Limita texto a 2 linhas */
+        line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
 
-    /* 3. O MODAL DO PRODUTO (AQUELE QUE ABRE) */
-    .modal-conteudo {
-        width: 95%; /* Ocupa quase a tela toda */
-        padding: 20px;
-        margin: 10px;
-        max-height: 90vh; /* Evita que fique maior que a tela */
-        overflow-y: auto; /* Permite rolar se for grande */
-    }
-    .modal-corpo {
-        flex-direction: column; /* Joga a foto pra CIMA e texto pra BAIXO */
-        gap: 15px;
-        text-align: center; /* Centraliza tudo */
-    }
-    .modal-corpo img {
-        width: 100%; /* Foto ocupa largura total */
-        height: 200px; /* Altura fixa */
-        margin: 0 auto;
-    }
-    .modal-info h1 {
-        font-size: 1.8em; /* Nome menor */
-    }
-    /* Ajuste nos botões de + e - */
-    .quantidade-controle button {
-        width: 35px; height: 35px; /* Botões maiores pro dedo acertar */
+    .card-hamburguer .info span {
+        font-size: 1.1em;
+        color: var(--rosa-principal); /* O Rosa Neon */
+        font-weight: bold;
     }
 
-    /* 4. CARRINHO LATERAL */
-    .cart-painel {
-        width: 85%; /* Deixa ver um pouquinho do fundo */
-        max-width: none;
+    /* 3. AJUSTES GERAIS DE VISIBILIDADE */
+    .titulo-secao {
+        text-align: left; /* Títulos alinhados a esquerda */
+        font-size: 1.5em;
+        margin-left: 10px;
+        margin-top: 30px;
+        border-bottom: 2px solid var(--rosa-principal);
+        display: inline-block;
+    }
+
+    /* Botão Flutuante do Carrinho (Pra não atrapalhar) */
+    .btn-cart {
+        width: 60px;
+        height: 60px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 1.5em;
     }
     
-    /* 5. MODAL DE CHECKOUT (FINALIZAR) */
-    #checkout-modal .modal-conteudo {
-        width: 100%;
-        height: 100%; /* Ocupa tela cheia no mobile */
-        border-radius: 0;
-        max-height: none;
-        overflow-y: auto;
-    }
-    .opcoes-entrega {
-        flex-direction: column; /* Botões de entrega um embaixo do outro */
-    }
-    
-    /* 6. STATUS FLUTUANTE */
+    /* Status da Loja menorzinho */
     .status-badge {
-        font-size: 0.7em; /* Diminui a plaquinha de aberto/fechado */
-        padding: 8px 12px;
+        font-size: 0.75em;
+        padding: 5px 15px;
     }
 }
